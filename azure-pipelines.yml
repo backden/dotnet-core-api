@@ -26,7 +26,7 @@ steps:
     
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Agent.BuildDirectory)/bin/Release'
+    SourceFolder: '$(Agent.BuildDirectory)/s/bin/Release'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
