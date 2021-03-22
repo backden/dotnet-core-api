@@ -36,18 +36,18 @@ steps:
 #     ArtifactName: 'drop'
 #     publishLocation: 'Container'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-
-# - task: UniversalPackages@0
+# - task: PublishBuildArtifacts@1
 #   inputs:
-#     command: 'publish'
-#     publishDirectory: '$(Build.ArtifactStagingDirectory)'
-#     # feedsToUsePublish: 'internal'
-#     vstsFeedPublish: 'f1e8e27d-10f1-4d17-9d50-d9f38e3e34c3'
-#     vstsFeedPackagePublish: 'drop'
-#     versionOption: 'minor'
-#     packagePublishDescription: 'First .NET Core'
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'drop'
+#     publishLocation: 'Container'
+
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    # feedsToUsePublish: 'internal'
+    vstsFeedPublish: 'f1e8e27d-10f1-4d17-9d50-d9f38e3e34c3'
+    vstsFeedPackagePublish: 'drop'
+    versionOption: 'minor'
+    packagePublishDescription: 'First .NET Core'
