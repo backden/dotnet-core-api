@@ -26,12 +26,22 @@ steps:
     
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Agent.BuildDirectory)/s/bin/Release'
+    SourceFolder: '$(Build.SourcesDirectory)/bin/Release'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'drop'
+#     publishLocation: 'Container'
+
+- task: UniversalPackages@0
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: 'ff607e36-48a3-4f1b-aea6-1ab2c9c9793b/3047157b-39f0-4ecd-ad8f-411d7780b2b0'
+    vstsFeedPackagePublish: '<Package name>'
+    versionOption: 'major'
+    packagePublishDescription: '<Package description>'
