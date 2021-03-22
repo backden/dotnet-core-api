@@ -49,5 +49,5 @@ steps:
     feedsToUsePublish: 'internal'
     vstsFeedPublish: 'f1e8e27d-10f1-4d17-9d50-d9f38e3e34c3'
     vstsFeedPackagePublish: 'drop'
-    versionOption: 'major'
+    versionOption: 'minor'
     packagePublishDescription: 'First .NET Core'
