@@ -41,7 +41,7 @@ steps:
     command: 'publish'
     publishDirectory: '$(Build.ArtifactStagingDirectory)'
     feedsToUsePublish: 'internal'
-    vstsFeedPublish: 'c643061b-48ba-4a2a-941f-f40aaca07cea'
+    vstsFeedPublish: 'long11847590965'
     vstsFeedPackagePublish: 'drop'
     versionOption: 'major'
     packagePublishDescription: 'First .NET Core'
