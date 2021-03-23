@@ -16,6 +16,10 @@ steps:
   displayName: 'Run a one-line script'
 - script: printenv
   displayName: 'Review Environment'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: 3.1
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
