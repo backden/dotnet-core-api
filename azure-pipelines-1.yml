@@ -32,13 +32,15 @@ steps:
   displayName: 'Install Docker Tool'
   inputs:
     dockerVersion: '17.09.0-ce'
-- script: |
-    rm -rf .git
-  displayName: ''
+    
+# - script: |
+#     rm -rf .git
+#   displayName: 'Delete .git folder'
 
 - task: Docker@0
   displayName: 'Run build Dockerfile'
   inputs:
+    containerregistrytype: 'Azure Container Registry'
     action: 'Build an image'
     dockerFile: '**/Dockerfile'
     imageName: '$(ImageName)'
