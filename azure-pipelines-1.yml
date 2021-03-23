@@ -19,14 +19,6 @@ steps:
   displayName: 'Run a one-line script'
 - script: printenv
   displayName: 'Review Environment'
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: 3.1.x
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
 
 - task: DockerInstaller@0
   displayName: 'Install Docker Tool'
@@ -45,6 +37,16 @@ steps:
     dockerFile: 'Dockerfile'
     imageName: '$(ImageName)'
     includeSourceTags: true
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: 3.1.x
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
   inputs:
