@@ -42,7 +42,7 @@ steps:
   inputs:
     containerregistrytype: 'Azure Container Registry'
     action: 'Build an image'
-    dockerFile: '**/Dockerfile'
+    dockerFile: 'Dockerfile'
     imageName: '$(ImageName)'
     includeSourceTags: true
     
