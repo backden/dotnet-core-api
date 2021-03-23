@@ -29,11 +29,6 @@ steps:
 #     rm -rf .git
 #   displayName: 'Delete .git folder'
 
-- task: Docker@2
-  displayName: 'Run build Dockerfile'
-  inputs:
-    dockerFile: 'Dockerfile'
-
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
@@ -43,6 +38,12 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
+
+- task: Docker@2
+  displayName: 'Run build Dockerfile'
+  inputs:
+    dockerFile: 'Dockerfile'
+    tags: '$(Build.BuildId)'
 
 - task: DotNetCoreCLI@2
   inputs:
