@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS build
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-sdk AS build
 WORKDIR /source
 
 #RUN git --version
