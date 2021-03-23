@@ -12,7 +12,7 @@ pool:
 variables:
   ImageName: 'bk/aspdemo:$(Build.BuildId)'
 
-container: mcr.microsoft.com/dotnet/aspnet:5.0
+container: mcr.microsoft.com/dotnet/sdk:5.0
 
 steps:
 - script: echo Hello, world!
@@ -28,6 +28,11 @@ steps:
 # - script: |
 #     rm -rf .git
 #   displayName: 'Delete .git folder'
+- task: Docker@2
+  displayName: 'Run build Dockerfile'
+  inputs:
+    dockerFile: 'Dockerfile'
+    tags: '$(Build.BuildId)'
 
 - task: UseDotNet@2
   inputs:
@@ -38,12 +43,6 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-
-- task: Docker@2
-  displayName: 'Run build Dockerfile'
-  inputs:
-    dockerFile: 'Dockerfile'
-    tags: '$(Build.BuildId)'
 
 - task: DotNetCoreCLI@2
   inputs:
