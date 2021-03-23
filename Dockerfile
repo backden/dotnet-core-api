@@ -3,10 +3,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.csproj .
-RUN dotnet restore
-
 COPY . .
+RUN dotnet restore
 RUN dotnet publish -c Release -o /app --no-restore
 
 # final stage/image
