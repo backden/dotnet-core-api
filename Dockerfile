@@ -2,6 +2,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS build
 WORKDIR /source
 
+RUN git --version
+
 # copy csproj and restore as distinct layers
 COPY . .
 RUN dotnet restore
