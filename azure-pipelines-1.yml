@@ -32,6 +32,10 @@ steps:
   displayName: 'Install Docker Tool'
   inputs:
     dockerVersion: '17.09.0-ce'
+- script: |
+    rm -rf .git
+  displayName: ''
+
 - task: Docker@0
   displayName: 'Run build Dockerfile'
   inputs:
