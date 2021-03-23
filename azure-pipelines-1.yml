@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  ImageName: 'bk/aspdemo:$(Build.BuildId)'
+
 container: mcr.microsoft.com/dotnet/aspnet:5.0
 
 steps:
@@ -24,37 +27,32 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
+
+- task: Docker@0
+  inputs:
+    action: 'Build an image'
+    dockerFile: '**/Dockerfile'
+    imageName: '$(ImageName)'
+    includeSourceTags: true
     
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'publish'
-#     publishWebProjects: true
-#     arguments: '-c Release'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '-c Release'
     
-# - task: CopyFiles@2
-#   inputs:
-#     SourceFolder: '$(Build.SourcesDirectory)/bin/Release'
-#     Contents: '**'
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/bin/Release'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#     ArtifactName: 'drop'
-#     publishLocation: 'Container'
-
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#     ArtifactName: 'drop'
-#     publishLocation: 'Container'
-
-# - task: UniversalPackages@0
-#   inputs:
-#     command: 'publish'
-#     publishDirectory: '$(Build.ArtifactStagingDirectory)'
-#     feedsToUsePublish: 'internal'
-#     vstsFeedPublish: 'f1e8e27d-10f1-4d17-9d50-d9f38e3e34c3'
-#     vstsFeedPackagePublish: 'drop'
-#     versionOption: 'minor'
-#     packagePublishDescription: 'First .NET Core'
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: 'f1e8e27d-10f1-4d17-9d50-d9f38e3e34c3'
+    vstsFeedPackagePublish: 'drop'
+    versionOption: 'minor'
+    packagePublishDescription: 'First .NET Core'
