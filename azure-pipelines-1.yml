@@ -28,7 +28,12 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
 
+- task: DockerInstaller@0
+  displayName: 'Install Docker Tool'
+  inputs:
+    dockerVersion: '17.09.0-ce'
 - task: Docker@0
+  displayName: 'Run build Dockerfile'
   inputs:
     action: 'Build an image'
     dockerFile: '**/Dockerfile'
