@@ -4,31 +4,95 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  branches:
+   exclude:
+     - master
+  tags:
+    include:
+    - it_*
+    - dev_*
+
 
 pool:
+  # name: 'Home Sweet Home'
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+container: mcr.microsoft.com/dotnet/sdk:5.0
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
+steps:
+# - script: echo $(myname)
+# - script: echo ##vso[task.setvariable variable=myName;]$(myname)
+
+# - task: Cache@2
+#   inputs:
+#     key: '$(System.DefaultWorkingDirectory)/README.md'
+#     restoreKeys: | 
+#       cat
+#     #   dotnet
+#     path: '$(System.DefaultWorkingDirectory)/README.md'
+#     cacheHitVar: CACHE_HIT
+# - task: PowerShell@2
+#   condition: ne(variables.CACHE_HIT, 'true')
+#   inputs:
+#     targetType: 'inline'
+#     script: 'get-content deployment.yaml | %{$_ -replace "TAG_IMAGE", $(Build.BuildId) } > a.yaml | cat a.yaml'
     
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '-c Release'
+# - task: PowerShell@2
+#   inputs:
+#     targetType: 'inline'
+#     script: cat a.yaml
+
+# - task: PowerShell@2
+#   condition: eq(variables.CACHE_HIT, 'true')
+#   inputs:
+#     targetType: 'inline'
+#     script: echo 'Cache found'
     
-- task: CopyFiles@2
+# - task: PowerShell@2
+#   condition: ne(variables.CACHE_HIT, 'true')
+#   inputs:
+#     targetType: 'inline'
+#     script: echo 'Cache not Found'
+    
+# - task: PowerShell@2
+#   inputs:
+#     targetType: 'inline'
+#     script: cat a.yaml
+
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'build'
+#     projects: '**/*.csproj'
+    
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'publish'
+#     publishWebProjects: true
+#     arguments: '-c Release -o dist'
+
+# - task: DockerInstaller@0
+#   inputs:
+#     dockerVersion: '17.09.0-ce'
+
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'c9devop-acr'
+#     repository: 'devops'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+#     tags: $(Build.BuildId)
+
+- task: PowerShell@2
+  # condition: ne(variables.CACHE_HIT, 'true')
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/bin/Release'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetType: 'inline'
+    script: 'get-content deployment.yaml | %{$_ -replace "TAG_IMAGE", $(Build.BuildId) } > $(Build.ArtifactStagingDirectory)/deployment.yaml'
+
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: '$(Build.SourcesDirectory)/bin/Release'
+#     Contents: '**'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 # - task: PublishBuildArtifacts@1
 #   inputs:
@@ -36,12 +100,12 @@ steps:
 #     ArtifactName: 'drop'
 #     publishLocation: 'Container'
 
-- task: UniversalPackages@0
-  inputs:
-    command: 'publish'
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    feedsToUsePublish: 'internal'
-    vstsFeedPublish: 'ff607e36-48a3-4f1b-aea6-1ab2c9c9793b/393825b3-b905-4ba2-aa5f-dd11e7eb0ef1'
-    vstsFeedPackagePublish: 'drop'
-    versionOption: 'major'
-    packagePublishDescription: 'First .NET Core'
+# - task: UniversalPackages@0
+#   inputs:
+#     command: 'publish'
+#     publishDirectory: '$(Build.ArtifactStagingDirectory)'
+#     feedsToUsePublish: 'internal'
+#     vstsFeedPublish: 'ff607e36-48a3-4f1b-aea6-1ab2c9c9793b/393825b3-b905-4ba2-aa5f-dd11e7eb0ef1'
+#     vstsFeedPackagePublish: 'drop'
+#     versionOption: 'major'
+#     packagePublishDescription: 'First .NET Core'
